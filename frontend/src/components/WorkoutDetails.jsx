@@ -25,7 +25,7 @@ function WorkoutDetails({ title, load, reps, createdAt }) {
             Repititions:
           </Text>
           <Text>{reps}</Text>
-        </HStack>
+        </HStack>     
         <Text fontSize={{ base: "md", lg: "sm" }}>{createdAt}</Text>
       </CardBody>
     </Card>

@@ -1,0 +1,15 @@
+{
+  "name": "mern-tutorial",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "scripts": {
+    "start": "concurrently \"cd ./backend && nodemon devstart\" \"cd ./frontend && npm run dev\""
+  },
+  "dependencies": {
+    "concurrently": "^7.6.0"
+  }
+}
