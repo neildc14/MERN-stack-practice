@@ -8,7 +8,7 @@ const WorkoutSchema = new Schema(
     reps: { type: Number, required: true },
     load: { type: Number, required: true },
   },
-  { timeStamps: true }
+  { timestamps: true }
 );
 
 module.exports = mongoose.model("Workout", WorkoutSchema);
