@@ -27,7 +27,6 @@ function WorkoutForm() {
   });
 
   const createNewWorkout = (e) => {
-    e.preventDefault();
     mutation.mutate({ title, load, reps });
   };
 
@@ -38,15 +37,15 @@ function WorkoutForm() {
       </Heading>
       <FormControl mb={2}>
         <FormLabel>Exercise Title:</FormLabel>
-        <Input type="text" bgColor="white" {...bindTitle} />
+        <Input type="text" bgColor="white" required {...bindTitle} />
       </FormControl>
       <FormControl mb={2}>
         <FormLabel>Load(in kg.):</FormLabel>
-        <Input type="number" bgColor="white" {...bindLoad} />
+        <Input type="number" bgColor="white" required {...bindLoad} />
       </FormControl>
       <FormControl mb={2}>
         <FormLabel>Repetitions:</FormLabel>
-        <Input type="number" bgColor="white" {...bindReps} />
+        <Input type="number" bgColor="white" required {...bindReps} />
       </FormControl>
       <Button
         type="submit"
