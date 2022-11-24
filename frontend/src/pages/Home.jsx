@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Flex, Grid, GridItem } from "@chakra-ui/react";
 import WorkoutDetails from "../components/WorkoutDetails";
 import WorkoutForm from "../components/WorkoutForm";
+import DataLoading from "../components/DataLoading";
 import { useGetAllWorkoutsQuery } from "../services/api/workouts";
 
 function Home() {
@@ -12,6 +13,7 @@ function Home() {
       <Grid templateColumns="60% 1fr" gap={20}>
         <GridItem>
           <Flex flexDirection="column" gap={4}>
+            {isFetching && <DataLoading />}
             {isSuccess &&
               data.map((workout) => (
                 <WorkoutDetails
