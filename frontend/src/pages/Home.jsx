@@ -18,6 +18,7 @@ function Home() {
               data.map((workout) => (
                 <WorkoutDetails
                   key={workout._id}
+                  id={workout._id}
                   title={workout.title}
                   load={workout.load}
                   reps={workout.reps}

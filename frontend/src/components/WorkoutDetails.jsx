@@ -6,12 +6,24 @@ import {
   Text,
   HStack,
   Button,
-  VStack,
 } from "@chakra-ui/react";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import {
+  useDeleteWorkoutMutation,
+  useGetAllWorkoutsQuery,
+} from "../services/api/workouts";
 
-function WorkoutDetails({ title, load, reps, createdAt }) {
+function WorkoutDetails({ id, title, load, reps, createdAt }) {
+  const data = useGetAllWorkoutsQuery();
+  const [deleteWorkout] = useDeleteWorkoutMutation();
+
+  const deleteWorkoutFunction = () => {
+    deleteWorkout(id).then(() => {
+      data.refetch();
+    });
+  };
+
   return (
     <Card bgColor="white">
       <CardHeader>
@@ -45,7 +57,11 @@ function WorkoutDetails({ title, load, reps, createdAt }) {
           <Button rightIcon={<EditIcon />} size="xs" colorScheme="whatsapp">
             Update Workout
           </Button>
-          <Button rightIcon={<DeleteIcon />} size="xs">
+          <Button
+            rightIcon={<DeleteIcon />}
+            size="xs"
+            onClick={deleteWorkoutFunction}
+          >
             Delete Workout
           </Button>
         </HStack>

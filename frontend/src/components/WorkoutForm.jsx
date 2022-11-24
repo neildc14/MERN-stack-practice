@@ -7,27 +7,25 @@ import {
   FormHelperText,
   Input,
   Button,
-  Stack,
 } from "@chakra-ui/react";
 import React from "react";
 import useChangeInput from "../hooks/useChangeInput";
-import { useMutation } from "@tanstack/react-query";
-import { createWorkout } from "../services/createWorkout";
+import {
+  useCreateWorkoutMutation,
+  useGetAllWorkoutsQuery,
+} from "../services/api/workouts";
 
 function WorkoutForm() {
   const [title, bindTitle] = useChangeInput();
   const [load, bindLoad] = useChangeInput();
   const [reps, bindReps] = useChangeInput();
 
-  const mutation = useMutation({
-    mutationFn: createWorkout,
-    onError: (error, variables, context) => {
-      console.log(error);
-    },
-  });
+  const data = useGetAllWorkoutsQuery();
+  const [createWorkout, workoutResult] = useCreateWorkoutMutation();
 
   const createNewWorkout = (e) => {
-    mutation.mutate({ title, load, reps });
+    e.preventDefault();
+    createWorkout({ title, load, reps }).then(() => data.refetch());
   };
 
   return (
