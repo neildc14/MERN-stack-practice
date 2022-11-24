@@ -47,13 +47,7 @@ function WorkoutForm() {
         <FormLabel>Repetitions:</FormLabel>
         <Input type="number" bgColor="white" required {...bindReps} />
       </FormControl>
-      <Button
-        type="submit"
-        mt={6}
-        bgColor="primary.100"
-        color="white"
-        _hover={{ bgColor: "green.500" }}
-      >
+      <Button type="submit" mt={6} colorScheme="messenger" color="white">
         Add Workout
       </Button>
     </Box>

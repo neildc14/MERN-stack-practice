@@ -1,5 +1,15 @@
 import React from "react";
-import { Card, CardHeader, CardBody, Text, HStack } from "@chakra-ui/react";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  Text,
+  HStack,
+  Button,
+  VStack,
+} from "@chakra-ui/react";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
 function WorkoutDetails({ title, load, reps, createdAt }) {
   return (
@@ -25,8 +35,20 @@ function WorkoutDetails({ title, load, reps, createdAt }) {
             Repititions:
           </Text>
           <Text>{reps}</Text>
-        </HStack>     
-        <Text fontSize={{ base: "md", lg: "sm" }}>{createdAt}</Text>
+        </HStack>
+        <Text fontSize={{ base: "md", lg: "sm" }}>
+          {formatDistanceToNow(new Date(createdAt), {
+            addSuffix: true,
+          })}
+        </Text>
+        <HStack mt={4}>
+          <Button rightIcon={<EditIcon />} size="xs" colorScheme="whatsapp">
+            Update Workout
+          </Button>
+          <Button rightIcon={<DeleteIcon />} size="xs">
+            Delete Workout
+          </Button>
+        </HStack>
       </CardBody>
     </Card>
   );
