@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-function useChangeInput() {
-  const [value, setValue] = useState("");
+function useChangeInput(initialValue) {
+  const [value, setValue] = useState(initialValue);
 
   const bind = {
     value,
@@ -10,7 +10,11 @@ function useChangeInput() {
     },
   };
 
-  return [value, bind];
+  const reset = () => {
+    setValue("");
+  };
+
+  return [value, bind, reset];
 }
 
 export default useChangeInput;

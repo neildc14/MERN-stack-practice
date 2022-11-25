@@ -1,22 +1,28 @@
-import React from "react";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Text,
-  HStack,
-  Button,
-} from "@chakra-ui/react";
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
-import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import React, { useCallback } from "react";
 import {
   useDeleteWorkoutMutation,
   useGetAllWorkoutsQuery,
 } from "../services/api/workouts";
+import WorkoutUpdate from "../components/WorkoutUpdate";
+import { useSelector, useDispatch } from "react-redux";
+import { setIDToUpdate } from "../services/features/idSlice";
+import WorkoutCard from "./WorkoutCard";
 
-function WorkoutDetails({ id, title, load, reps, createdAt }) {
+function WorkoutDetails({
+  id,
+  title,
+  load,
+  reps,
+  createdAt,
+  isOpen,
+  onOpen,
+  onClose,
+}) {
   const data = useGetAllWorkoutsQuery();
   const [deleteWorkout] = useDeleteWorkoutMutation();
+
+  const IDToUpdate = useSelector((state) => state.updateID.IDToUpdate);
+  const dispatch = useDispatch();
 
   const deleteWorkoutFunction = () => {
     deleteWorkout(id).then(() => {
@@ -24,49 +30,42 @@ function WorkoutDetails({ id, title, load, reps, createdAt }) {
     });
   };
 
+  const IDSetter = useCallback(
+    (e) => {
+      dispatch(setIDToUpdate(e.target.id));
+      onOpen();
+    },
+    [IDToUpdate]
+  );
+
+  const resetID = useCallback(() => {
+    dispatch(setIDToUpdate(""));
+    onClose();
+  }, [IDToUpdate]);
+
+  console.log(id);
+
   return (
-    <Card bgColor="white">
-      <CardHeader>
-        <Text
-          color="primary.100"
-          fontSize={{ base: "lg", lg: "md" }}
-          fontWeight="bold"
-        >
-          {title}
-        </Text>
-      </CardHeader>
-      <CardBody pt={{ base: 4, lg: 2 }}>
-        <HStack>
-          <Text as="b" fontSize={{ base: "md", lg: "sm" }}>
-            Load(kg):
-          </Text>
-          <Text>{load}</Text>
-        </HStack>
-        <HStack>
-          <Text as="b" fontSize={{ base: "md", lg: "sm" }}>
-            Repititions:
-          </Text>
-          <Text>{reps}</Text>
-        </HStack>
-        <Text fontSize={{ base: "md", lg: "sm" }}>
-          {formatDistanceToNow(new Date(createdAt), {
-            addSuffix: true,
-          })}
-        </Text>
-        <HStack mt={4}>
-          <Button rightIcon={<EditIcon />} size="xs" colorScheme="whatsapp">
-            Update Workout
-          </Button>
-          <Button
-            rightIcon={<DeleteIcon />}
-            size="xs"
-            onClick={deleteWorkoutFunction}
-          >
-            Delete Workout
-          </Button>
-        </HStack>
-      </CardBody>
-    </Card>
+    <>
+      <WorkoutCard
+        title={title}
+        load={load}
+        reps={reps}
+        createdAt={createdAt}
+        IDSetter={IDSetter}
+        deleteWorkoutFunction={deleteWorkoutFunction}
+      />
+      <WorkoutUpdate
+        isOpen={isOpen}
+        onOpen={onOpen}
+        onClose={onClose}
+        id={IDToUpdate}
+        title={title}
+        load={load}
+        reps={reps}
+        resetId={resetID}
+      />
+    </>
   );
 }
 

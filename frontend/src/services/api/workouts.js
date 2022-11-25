@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const apiEndpoint = "http://localhost:4000/api/workouts";
+const APIEndpoint = "http://localhost:4000/api/workouts";
 
 export const workoutsApi = createApi({
   reducerPath: "workoutsApi",
-  baseQuery: fetchBaseQuery({ baseUrl: `${apiEndpoint}` }),
+  baseQuery: fetchBaseQuery({ baseUrl: `${APIEndpoint}` }),
   endpoints: (builder) => ({
     getAllWorkouts: builder.query({ query: () => "/" }),
     getWorkout: builder.query({
@@ -23,6 +23,16 @@ export const workoutsApi = createApi({
         method: "DELETE",
       }),
     }),
+    updateWorkout: builder.mutation({
+      query(data) {
+        const { id, ...body } = data;
+        return {
+          url: `/${id}`,
+          method: "PATCH",
+          body,
+        };
+      },
+    }),
   }),
 });
 
@@ -31,4 +41,5 @@ export const {
   useGetWorkoutQuery,
   useCreateWorkoutMutation,
   useDeleteWorkoutMutation,
+  useUpdateWorkoutMutation,
 } = workoutsApi;
