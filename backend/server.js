@@ -2,13 +2,14 @@ const express = require("express");
 const mongoose = require("mongoose");
 const logger = require("morgan");
 const cors = require("cors");
+const corsOptions = require("./config/corsOptions");
 require("dotenv").config();
 
 const app = express();
 const workoutsRoutes = require("./routes/workouts");
 
 //middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(logger("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());

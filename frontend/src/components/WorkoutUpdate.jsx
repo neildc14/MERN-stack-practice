@@ -31,7 +31,7 @@ const WorkoutUpdate = ({ isOpen, onClose, resetId, workout }) => {
       id: _id,
       title: updateTitle,
       load: updateLoad,
-      reps: updateReps,
+      reps: updateReps,   
     })
       .then((data) => {
         console.log(data);
@@ -52,7 +52,7 @@ const WorkoutUpdate = ({ isOpen, onClose, resetId, workout }) => {
           isCentered
           motionPreset="slideInBottom"
         >
-          <ModalOverlay  bg='blackAlpha.300' />
+          <ModalOverlay  bg='blackAlpha.300'  />
           <ModalContent>
             <ModalHeader>Update Workout</ModalHeader>
             <ModalCloseButton />
