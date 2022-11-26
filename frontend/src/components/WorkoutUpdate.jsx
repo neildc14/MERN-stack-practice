@@ -44,8 +44,15 @@ const WorkoutUpdate = ({ isOpen, onClose, resetId, workout }) => {
   return (
     <>
       {isOpen && workout && (
-        <Modal isOpen={isOpen} onClose={resetId} mt={10} py={10} isCentered>
-          <ModalOverlay />
+        <Modal
+          isOpen={isOpen}
+          onClose={resetId}
+          mt={10}
+          py={10}
+          isCentered
+          motionPreset="slideInBottom"
+        >
+          <ModalOverlay  bg='blackAlpha.300' />
           <ModalContent>
             <ModalHeader>Update Workout</ModalHeader>
             <ModalCloseButton />
