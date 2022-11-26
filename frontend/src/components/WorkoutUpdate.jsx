@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -6,53 +6,56 @@ import {
   ModalHeader,
   ModalBody,
   ModalCloseButton,
+  Input,
 } from "@chakra-ui/react";
 import Form from "../layouts/Form";
 import useChangeInput from "../hooks/useChangeInput";
 import {
   useGetAllWorkoutsQuery,
-  useGetWorkoutQuery,
   useUpdateWorkoutMutation,
 } from "../services/api/workouts";
 
-const WorkoutUpdate = ({ isOpen, resetId, id }) => {
+const WorkoutUpdate = ({ isOpen, onClose, resetId, workout }) => {
   const results = useGetAllWorkoutsQuery();
-  const { data: workout, isFetching, isSuccess } = useGetWorkoutQuery(id);
   const [updateWorkout] = useUpdateWorkoutMutation();
+  const { _id, title, load, reps } = workout;
+  const [updateTitle, bindUpdateTitle, resetTitle] = useChangeInput(title);
+  const [updateLoad, bindUpdateLoad, resetLoad] = useChangeInput(load);
+  const [updateReps, bindUpdateReps, resetReps] = useChangeInput(reps);
+  const [id] = useChangeInput(_id);
 
-  const [updateTitle, bindTitle] = useChangeInput(workout?.title);
-  const [updateLoad, bindLoad] = useChangeInput(workout?.load);
-  const [updateReps, bindReps] = useChangeInput(workout?.reps);
-
-  const updateWorkoutFunction = () => {
-    updateWorkout({ id, updateTitle, updateLoad, updateReps }).then(() => {
-      results.refetch();
-    });
+  const updateWorkoutFunction = (e) => {
+    e.preventDefault();
+    updateWorkout({
+      id: _id,
+      title: updateTitle,
+      load: updateLoad,
+      reps: updateReps,
+    })
+      .then((data) => {
+        console.log(data);
+        onClose();
+        results.refetch();
+      })
+      .catch((err) => console.log(err));
   };
-  console.log(workout);
+  console.log("UPDATE", workout, id);
+  console.log("VALUES", id, updateTitle, updateLoad, updateReps);
   return (
     <>
-      {isSuccess && (
-        <Modal
-          isOpen={isOpen}
-          onClose={resetId}
-          mt={10}
-          py={10}
-          id={id}
-          isCentered
-        >
+      {isOpen && (
+        <Modal isOpen={isOpen} onClose={resetId} mt={10} py={10} isCentered>
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>Update Workout</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
               <Form
-                id={id}
-                bindTitle={bindTitle}
-                bindLoad={bindLoad}
-                bindReps={bindReps}
+                bindTitle={bindUpdateTitle}
+                bindLoad={bindUpdateLoad}
+                bindReps={bindUpdateReps}
                 submitFunction={updateWorkoutFunction}
-                buttonName="Update Workout"
+                buttonName="Update"
               />
             </ModalBody>
           </ModalContent>

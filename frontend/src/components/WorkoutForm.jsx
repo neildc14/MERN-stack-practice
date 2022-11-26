@@ -24,7 +24,7 @@ function WorkoutForm() {
     });
   };
 
-  return ( 
+  return (
     <Form
       bindTitle={bindTitle}
       bindLoad={bindLoad}

@@ -16,6 +16,7 @@ export default function WorkoutCard({
   load,
   reps,
   createdAt,
+  updatedAt,
   IDSetter,
   deleteWorkoutFunction,
 }) {
@@ -43,8 +44,9 @@ export default function WorkoutCard({
           </Text>
           <Text>{reps}</Text>
         </HStack>
+
         <Text fontSize={{ base: "md", lg: "sm" }}>
-          {formatDistanceToNow(new Date(createdAt), {
+          {formatDistanceToNow(new Date(updatedAt), {
             addSuffix: true,
           })}
         </Text>

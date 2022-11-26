@@ -49,7 +49,7 @@ const deleteWorkOut = async (req, res) => {
 
 const updateWorkOut = async (req, res) => {
   const id = req.params.id;
-
+  console.log(req.body);
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ error: "Workout does not exist" });
   }
@@ -64,7 +64,7 @@ const updateWorkOut = async (req, res) => {
   if (!workout) {
     return res.status(404).json({ error: "Workout does not exist" });
   }
-
+  // console.log(workout);
   res.status(200).json(workout);
 };
 

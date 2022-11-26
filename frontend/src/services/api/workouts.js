@@ -24,14 +24,11 @@ export const workoutsApi = createApi({
       }),
     }),
     updateWorkout: builder.mutation({
-      query(data) {
-        const { id, ...body } = data;
-        return {
-          url: `/${id}`,
-          method: "PATCH",
-          body,
-        };
-      },
+      query: ({ id, ...patch }) => ({
+        url: `/${id}`,
+        method: "PATCH",
+        body: patch,
+      }),
     }),
   }),
 });

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  IDToUpdate: "",
+  IDToUpdate: undefined,
 };
 
 const idSlice = createSlice({

@@ -5,6 +5,7 @@ import {
   Grid,
   GridItem,
   useDisclosure,
+  Text,
 } from "@chakra-ui/react";
 import WorkoutDetails from "../components/WorkoutDetails";
 import WorkoutForm from "../components/WorkoutForm";
@@ -14,7 +15,7 @@ import { useGetAllWorkoutsQuery } from "../services/api/workouts";
 function Home() {
   const { data, isFetching, isSuccess } = useGetAllWorkoutsQuery();
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
-  console.log("UPDATED HOME");
+  console.log("UPDATED HOME", data);
   return (
     <Container maxW="container.xl" mt={10}>
       <Grid templateColumns="60% 1fr" gap={20}>
@@ -30,6 +31,7 @@ function Home() {
                   load={workout.load}
                   reps={workout.reps}
                   createdAt={workout.createdAt}
+                  updatedAt={workout?.updatedAt}
                   isOpen={isOpen}
                   onOpen={onOpen}
                   onClose={onClose}

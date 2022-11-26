@@ -9,17 +9,15 @@ import {
 } from "@chakra-ui/react";
 
 function Form({
-  id,
   formHeading,
   submitFunction,
   bindTitle,
   bindLoad,
   bindReps,
   buttonName,
-  children,
 }) {
   return (
-    <Box as="form" mx="auto" onSubmit={submitFunction} id={id}>
+    <Box as="form" mx="auto" onSubmit={submitFunction}>
       <Heading as="h2" mb={4} fontSize={{ base: "lg" }} textAlign="center">
         {formHeading}
       </Heading>
@@ -35,7 +33,7 @@ function Form({
         <FormLabel>Repetitions:</FormLabel>
         <Input type="number" bgColor="white" required {...bindReps} />
       </FormControl>
-      <FormControl>{children}</FormControl>
+
       <Button type="submit" mt={6} colorScheme="messenger" color="white">
         {buttonName}
       </Button>
