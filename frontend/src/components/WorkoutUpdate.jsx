@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -40,9 +40,6 @@ const WorkoutUpdate = ({ isOpen, onClose, resetId, workout }) => {
       })
       .catch((err) => setError("Something went wrong.Try again"));
   };
-
-  console.log("UPDATE", workout, _id);
-  console.log("VALUES", updateTitle, updateLoad, updateReps);
 
   return (
     <>

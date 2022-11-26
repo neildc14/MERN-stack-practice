@@ -36,4 +36,4 @@ function WorkoutForm() {
   );
 }
 
-export default WorkoutForm;
+export default React.memo(WorkoutForm);

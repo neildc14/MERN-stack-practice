@@ -15,7 +15,7 @@ import { useGetAllWorkoutsQuery } from "../services/api/workouts";
 function Home() {
   const { data, isFetching, isSuccess } = useGetAllWorkoutsQuery();
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
-  console.log("UPDATED HOME");
+
   return (
     <Container maxW="container.xl" mt={10}>
       <Grid templateColumns="60% 1fr" gap={20}>
