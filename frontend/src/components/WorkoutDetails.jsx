@@ -24,7 +24,11 @@ function WorkoutDetails({
   const dispatch = useDispatch();
   const results = useGetAllWorkoutsQuery();
   const [deleteWorkout] = useDeleteWorkoutMutation();
-  const { data: workout, isSuccess } = useGetWorkoutQuery(IDToUpdate);
+  const {
+    data: workout,
+    isSuccess,
+    isFetching,
+  } = useGetWorkoutQuery(IDToUpdate);
 
   const IDSetter = useCallback(
     (e) => {
@@ -38,7 +42,6 @@ function WorkoutDetails({
   const resetID = useCallback(() => {
     dispatch(setIDToUpdate(undefined));
     onClose();
-    return;
   }, [IDToUpdate]);
 
   const deleteWorkoutFunction = useCallback(() => {
@@ -59,7 +62,7 @@ function WorkoutDetails({
         IDSetter={IDSetter}
         deleteWorkoutFunction={deleteWorkoutFunction}
       />
-      {isSuccess && (
+      {!isFetching && isSuccess && (
         <WorkoutUpdate
           id={IDToUpdate}
           isOpen={isOpen}

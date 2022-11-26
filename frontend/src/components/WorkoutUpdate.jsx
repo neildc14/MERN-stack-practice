@@ -6,7 +6,8 @@ import {
   ModalHeader,
   ModalBody,
   ModalCloseButton,
-  Input,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
 import Form from "../layouts/Form";
 import useChangeInput from "../hooks/useChangeInput";
@@ -19,10 +20,10 @@ const WorkoutUpdate = ({ isOpen, onClose, resetId, workout }) => {
   const results = useGetAllWorkoutsQuery();
   const [updateWorkout] = useUpdateWorkoutMutation();
   const { _id, title, load, reps } = workout;
-  const [updateTitle, bindUpdateTitle, resetTitle] = useChangeInput(title);
-  const [updateLoad, bindUpdateLoad, resetLoad] = useChangeInput(load);
-  const [updateReps, bindUpdateReps, resetReps] = useChangeInput(reps);
-  const [id] = useChangeInput(_id);
+  const [updateTitle, bindUpdateTitle] = useChangeInput(title);
+  const [updateLoad, bindUpdateLoad] = useChangeInput(load);
+  const [updateReps, bindUpdateReps] = useChangeInput(reps);
+  const [error, setError] = useState(null);
 
   const updateWorkoutFunction = (e) => {
     e.preventDefault();
@@ -37,19 +38,21 @@ const WorkoutUpdate = ({ isOpen, onClose, resetId, workout }) => {
         onClose();
         results.refetch();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => setError("Something went wrong.Try again"));
   };
-  console.log("UPDATE", workout, id);
-  console.log("VALUES", id, updateTitle, updateLoad, updateReps);
+
+  console.log("UPDATE", workout, _id);
+  console.log("VALUES", updateTitle, updateLoad, updateReps);
+
   return (
     <>
-      {isOpen && (
+      {isOpen && workout && (
         <Modal isOpen={isOpen} onClose={resetId} mt={10} py={10} isCentered>
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>Update Workout</ModalHeader>
             <ModalCloseButton />
-            <ModalBody>
+            <ModalBody mb={8}>
               <Form
                 bindTitle={bindUpdateTitle}
                 bindLoad={bindUpdateLoad}
@@ -57,6 +60,12 @@ const WorkoutUpdate = ({ isOpen, onClose, resetId, workout }) => {
                 submitFunction={updateWorkoutFunction}
                 buttonName="Update"
               />
+              {error && (
+                <Alert status="error" mt={4}>
+                  <AlertIcon />
+                  There was an error processing your request
+                </Alert>
+              )}
             </ModalBody>
           </ModalContent>
         </Modal>

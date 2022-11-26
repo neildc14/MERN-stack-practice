@@ -10,8 +10,9 @@ function useChangeInput(initialValue) {
     },
   };
 
+
   const reset = () => {
-    setValue("");
+    setValue(initialValue || "");
   };
 
   return [value, bind, reset];
