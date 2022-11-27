@@ -28,7 +28,7 @@ export default function WorkoutCard({
           fontSize={{ base: "lg", lg: "md" }}
           fontWeight="bold"
         >
-          {title}
+          {title.charAt(0).toUpperCase() + title.slice(1)}
         </Text>
       </CardHeader>
       <CardBody pt={{ base: 4, lg: 2 }}>
