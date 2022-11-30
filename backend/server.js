@@ -7,6 +7,7 @@ require("dotenv").config();
 
 const app = express();
 const workoutsRoutes = require("./routes/workouts");
+const userRoutes = require("./routes/users");
 
 //middleware
 app.use(cors(corsOptions));
@@ -20,6 +21,7 @@ app.use((req, res, next) => {
 
 //routes
 app.use("/api/workouts", workoutsRoutes);
+app.use("/api/user", userRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI, {
