@@ -7,4 +7,15 @@ const signUpValidation = [
     .withMessage("Must be at least 5 chars long"),
 ];
 
-module.exports = { signUpValidation };
+const loginValidation = [
+  body("email")
+    .isEmail()
+    .not()
+    .isEmpty()
+    .trim()
+    .escape()
+    .withMessage("Fill email address"),
+  body("password").not().isEmpty().trim().escape().withMessage("Fill password"),
+];
+
+module.exports = { signUpValidation, loginValidation };
