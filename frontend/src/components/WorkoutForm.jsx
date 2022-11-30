@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import useChangeInput from "../hooks/useChangeInput";
 import Form from "../layouts/Form";
 import {
@@ -14,15 +14,18 @@ function WorkoutForm() {
   const data = useGetAllWorkoutsQuery();
   const [createWorkout] = useCreateWorkoutMutation();
 
-  const createNewWorkout = (e) => {
-    e.preventDefault();
-    createWorkout({ title, load, reps }).then(() => {
-      resetTitle();
-      resetLoad();
-      resetReps();
-      data.refetch();
-    });
-  };
+  const createNewWorkout = useCallback(
+    (e) => {
+      e.preventDefault();
+      createWorkout({ title, load, reps }).then(() => {
+        resetTitle();
+        resetLoad();
+        resetReps();
+        data.refetch();
+      });
+    },
+    [title, load, reps]
+  );
 
   return (
     <Form
