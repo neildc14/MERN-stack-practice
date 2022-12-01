@@ -11,7 +11,7 @@ UserSchema.statics.signup = async function (email, password) {
   const exists = await this.findOne({ email });
 
   if (exists) {
-    throw Error("This email already in use");
+    throw new Error("This email already in use");
   }
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
@@ -23,12 +23,12 @@ UserSchema.statics.login = async function (email, password) {
   const user = await this.findOne({ email });
 
   if (!user) {
-    throw Error("Incorrect Email");
+    throw new Error("Incorrect Email");
   }
 
   const match = await bcrypt.compare(password, user.password);
   if (!match) {
-    throw Error("Incorrect Password");
+    throw new Error("Incorrect Password");
   }
   return user;
 };

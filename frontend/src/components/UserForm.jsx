@@ -7,6 +7,7 @@ import {
   Text,
   FormControl,
   FormLabel,
+  FormErrorMessage,
   Input,
   Button,
   InputGroup,
@@ -23,10 +24,22 @@ function UserForm({
   bindEmail,
   bindPassword,
   onSubmitFunction,
+  error
 }) {
   const [show, setShow] = useState(false);
   const showPassword = () => setShow(!show);
 
+  let emailError;
+  let passwordError;
+
+  console.log(error)
+  error?.map((err) => err)
+    .filter((err) => {
+      if (err.param === 'email') return emailError = err.msg
+      if (err.param === 'password') return passwordError = err.msg
+    })
+
+  console.log(emailError, passwordError)
   return (
     <Card bgColor="white" w="23rem">
       <CardHeader>
@@ -34,11 +47,13 @@ function UserForm({
       </CardHeader>
       <CardBody>
         <Box as="form" onSubmit={onSubmitFunction}>
-          <FormControl mb={6}>
+          <FormControl mb={6} isInvalid={error}>
             <FormLabel>Email</FormLabel>
             <Input type="email" autoComplete="off" {...bindEmail} />
+            <FormErrorMessage>{emailError}</FormErrorMessage>
           </FormControl>
-          <FormControl mb={6}>
+
+          <FormControl mb={6} isInvalid={error}>
             <FormLabel>Password</FormLabel>
             <InputGroup>
               <Input
@@ -60,6 +75,7 @@ function UserForm({
                 </InputRightElement>
               )}
             </InputGroup>
+            <FormErrorMessage>{passwordError}</FormErrorMessage>
           </FormControl>
           <FormControl>{children}</FormControl>
           <FormControl mt={6}>
