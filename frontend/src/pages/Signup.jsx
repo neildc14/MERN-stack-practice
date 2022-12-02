@@ -24,10 +24,8 @@ function Signup() {
     [email, password]
   );
 
-
-  const errors = error?.data.errors
-  const emailUsedError = error?.data
-
+  const validationErrors = error?.data.errors
+  const authenticaionErrors = error?.data
 
   return (
     <Container maxW="container.xl" mt={10}>
@@ -39,8 +37,8 @@ function Signup() {
           bindEmail={bindEmail}
           bindPassword={bindPassword}
           onSubmitFunction={signUpAccount}
-          error={errors}
-          emailUsedError={emailUsedError}
+          validationErrors={validationErrors}
+          authenticaionErrors={authenticaionErrors}
         >
           {/* <FormControl isInvalid={error}>
             <FormLabel>Confirm password</FormLabel>

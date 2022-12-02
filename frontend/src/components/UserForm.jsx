@@ -24,7 +24,8 @@ function UserForm({
   bindEmail,
   bindPassword,
   onSubmitFunction,
-  error
+  validationErrors,
+  authenticaionErrors
 }) {
   const [show, setShow] = useState(false);
   const showPassword = () => setShow(!show);
@@ -32,14 +33,15 @@ function UserForm({
   let emailError;
   let passwordError;
 
-  console.log(error)
-  error?.map((err) => err)
+  validationErrors?.map((err) => err)
     .filter((err) => {
       if (err.param === 'email') return emailError = err.msg
       if (err.param === 'password') return passwordError = err.msg
     })
 
-  console.log(emailError, passwordError)
+  const authError = authenticaionErrors?.error
+
+
   return (
     <Card bgColor="white" w="23rem">
       <CardHeader>
@@ -47,13 +49,13 @@ function UserForm({
       </CardHeader>
       <CardBody>
         <Box as="form" onSubmit={onSubmitFunction}>
-          <FormControl mb={6} isInvalid={error}>
+          <FormControl mb={6} isInvalid={validationErrors || authError}>
             <FormLabel>Email</FormLabel>
             <Input type="email" autoComplete="off" {...bindEmail} />
-            <FormErrorMessage>{emailError}</FormErrorMessage>
+            <FormErrorMessage>{emailError || authError}</FormErrorMessage>
           </FormControl>
 
-          <FormControl mb={6} isInvalid={error}>
+          <FormControl mb={6} isInvalid={validationErrors}>
             <FormLabel>Password</FormLabel>
             <InputGroup>
               <Input
