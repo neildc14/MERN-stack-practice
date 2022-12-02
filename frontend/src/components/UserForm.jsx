@@ -39,8 +39,19 @@ function UserForm({
       if (err.param === 'password') return passwordError = err.msg
     })
 
+  let incorrectEmail;
+  let incorrectPassword;
   const authError = authenticaionErrors?.error
 
+  if (authError?.localeCompare('This email already in use') === 0) {
+    incorrectEmail = authError
+  }
+  if (authError?.localeCompare("Incorrect Email") === 0) {
+    incorrectEmail = authError
+  }
+  if (authError?.localeCompare("Incorrect Password") === 0) {
+    incorrectPassword = authError
+  }
 
   return (
     <Card bgColor="white" w="23rem">
@@ -49,13 +60,13 @@ function UserForm({
       </CardHeader>
       <CardBody>
         <Box as="form" onSubmit={onSubmitFunction}>
-          <FormControl mb={6} isInvalid={validationErrors || authError}>
+          <FormControl mb={6} isInvalid={emailError || incorrectEmail}>
             <FormLabel>Email</FormLabel>
             <Input type="email" autoComplete="off" {...bindEmail} />
-            <FormErrorMessage>{emailError || authError}</FormErrorMessage>
+            <FormErrorMessage>{emailError || incorrectEmail}</FormErrorMessage>
           </FormControl>
 
-          <FormControl mb={6} isInvalid={validationErrors}>
+          <FormControl mb={6} isInvalid={passwordError || incorrectPassword}>
             <FormLabel>Password</FormLabel>
             <InputGroup>
               <Input
@@ -77,7 +88,7 @@ function UserForm({
                 </InputRightElement>
               )}
             </InputGroup>
-            <FormErrorMessage>{passwordError}</FormErrorMessage>
+            <FormErrorMessage>{passwordError || incorrectPassword}</FormErrorMessage>
           </FormControl>
           <FormControl>{children}</FormControl>
           <FormControl mt={6}>

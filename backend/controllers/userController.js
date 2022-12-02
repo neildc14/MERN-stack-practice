@@ -39,4 +39,4 @@ const signUpUser = async (req, res) => {
 module.exports = {
   loginUser,
   signUpUser,
-};  
+};

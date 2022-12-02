@@ -26,6 +26,7 @@ function Signup() {
 
   const validationErrors = error?.data.errors
   const authenticaionErrors = error?.data
+  console.log(error?.data)
 
   return (
     <Container maxW="container.xl" mt={10}>

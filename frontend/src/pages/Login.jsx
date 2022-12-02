@@ -1,4 +1,4 @@
-import React, { useCallback,} from "react";
+import React, { useCallback, } from "react";
 import { Container, Flex } from "@chakra-ui/react";
 import useChangeInput from "../hooks/useChangeInput";
 import UserForm from "../components/UserForm";
@@ -7,7 +7,7 @@ import { useLogInMutation } from "../services/api/users";
 function Login() {
   const [email, bindEmail] = useChangeInput("");
   const [password, bindPassword] = useChangeInput("");
-  const [loginAccount] = useLogInMutation();
+  const [loginAccount, { error }] = useLogInMutation();
   const login = true;
 
   const loginUserAccount = useCallback(
@@ -18,6 +18,9 @@ function Login() {
     [email, password]
   );
 
+  const validationErrors = error?.data.errors
+  const authenticaionErrors = error?.data
+  console.log(validationErrors, validationErrors)
   return (
     <Container maxW="container.xl" mt={10}>
       <Flex justifyContent="center">
@@ -28,6 +31,8 @@ function Login() {
           bindEmail={bindEmail}
           bindPassword={bindPassword}
           onSubmitFunction={loginUserAccount}
+          validationErrors={validationErrors}
+          authenticaionErrors={authenticaionErrors}
         />
       </Flex>
     </Container>
