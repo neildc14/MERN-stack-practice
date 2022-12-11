@@ -9,16 +9,18 @@ import { loginUser } from "../services/features/userSlice";
 function Signup() {
   const [email, bindEmail] = useChangeInput("");
   const [password, bindPassword] = useChangeInput("");
-  const login = false;
   const [signup, { error }] = useSignUpMutation();
-  const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
+  const login = false;
 
   const signUpAccount = useCallback(
     (e) => {
       e.preventDefault();
       signup({ email, password })
         .then((data) => {
+          if (data?.error) {
+            return;
+          }
           localStorage.setItem("user", JSON.stringify(data));
           dispatch(loginUser(data));
         })
@@ -28,11 +30,9 @@ function Signup() {
     },
     [email, password]
   );
-  console.log("USER", user);
 
   const validationErrors = error?.data.errors;
   const authenticaionErrors = error?.data;
-  console.log(error?.data);
 
   return (
     <Container maxW="container.xl" mt={10}>

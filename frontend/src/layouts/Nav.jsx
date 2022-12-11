@@ -1,8 +1,13 @@
 import React from "react";
 import { Box, Heading, Link, Container, Flex, HStack } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
+import useLogout from "../hooks/useLogout";
 
 function Nav() {
+  const [localStore, dispatch] = useLogout();
+  const logout = () => {
+    localStore(), dispatch();
+  };
   return (
     <Box as="header" p={8} bgColor="#FFFF">
       <Container maxW="container.xl">
@@ -17,6 +22,9 @@ function Nav() {
             </Heading>
           </Link>
           <HStack spacing={4}>
+            <Link as={RouterLink} to="/logout" onClick={logout}>
+              Logout
+            </Link>
             <Link as={RouterLink} to="/signup">
               Sign Up
             </Link>

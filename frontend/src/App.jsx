@@ -20,6 +20,9 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
         </Routes>
+        <Routes>
+          <Route path="/logout" element={<Login />} />
+        </Routes>
       </QueryClientProvider>
     </div>
   );

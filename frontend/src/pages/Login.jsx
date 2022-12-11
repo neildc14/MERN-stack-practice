@@ -1,4 +1,4 @@
-import React, { useCallback, } from "react";
+import React, { useCallback } from "react";
 import { Container, Flex } from "@chakra-ui/react";
 import useChangeInput from "../hooks/useChangeInput";
 import UserForm from "../components/UserForm";
@@ -18,9 +18,9 @@ function Login() {
     [email, password]
   );
 
-  const validationErrors = error?.data.errors
-  const authenticaionErrors = error?.data
-  console.log(validationErrors, validationErrors)
+  const validationErrors = error?.data.errors;
+  const authenticaionErrors = error?.data;
+
   return (
     <Container maxW="container.xl" mt={10}>
       <Flex justifyContent="center">
