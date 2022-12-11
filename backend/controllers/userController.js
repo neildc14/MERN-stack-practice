@@ -26,7 +26,7 @@ const signUpUser = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-
+  
   try {
     const user = await User.signup(email, password);
     const token = createToken(user._id);
