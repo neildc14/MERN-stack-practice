@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Container,
   Flex,
   Grid,
   GridItem,
   useDisclosure,
-  Text,
 } from "@chakra-ui/react";
 import WorkoutDetails from "../components/WorkoutDetails";
 import WorkoutForm from "../components/WorkoutForm";

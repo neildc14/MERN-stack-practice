@@ -4,9 +4,15 @@ import Nav from "./layouts/Nav";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import { useEffect } from "react";
 
 const queryClient = new QueryClient();
 function App() {
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log(user);
+  }, []);
+
   return (
     <div className="App">
       <QueryClientProvider client={queryClient}>

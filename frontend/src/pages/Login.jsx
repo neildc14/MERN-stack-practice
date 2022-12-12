@@ -3,17 +3,30 @@ import { Container, Flex } from "@chakra-ui/react";
 import useChangeInput from "../hooks/useChangeInput";
 import UserForm from "../components/UserForm";
 import { useLogInMutation } from "../services/api/users";
+import { useSelector, useDispatch } from "react-redux";
+import { loginUser } from "../services/features/userSlice";
 
 function Login() {
   const [email, bindEmail] = useChangeInput("");
   const [password, bindPassword] = useChangeInput("");
   const [loginAccount, { error }] = useLogInMutation();
+  const dispatch = useDispatch();
   const login = true;
 
   const loginUserAccount = useCallback(
     (e) => {
       e.preventDefault();
-      loginAccount({ email, password });
+      loginAccount({ email, password })
+        .then((data) => {
+          if (data?.error) {
+            return;
+          }
+          localStorage.setItem("user", JSON.stringify(data));
+          dispatch(loginUser(data));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     [email, password]
   );

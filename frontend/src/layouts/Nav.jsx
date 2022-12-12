@@ -1,13 +1,31 @@
-import React from "react";
-import { Box, Heading, Link, Container, Flex, HStack } from "@chakra-ui/react";
+import React, { useCallback, useEffect } from "react";
+import {
+  Box,
+  Heading,
+  Link,
+  Container,
+  Flex,
+  HStack,
+  Text,
+} from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 import useLogout from "../hooks/useLogout";
+import { useSelector } from "react-redux";
 
 function Nav() {
+  const user = useSelector((state) => state.user.user);
   const [localStore, dispatch] = useLogout();
-  const logout = () => {
+  const logout = useCallback(() => {
     localStore(), dispatch();
-  };
+  }, [user]);
+
+  useEffect(() => {
+    if (!localStorage.getItem("user")) {
+      localStorage.setItem("user", JSON.stringify(user));
+    }
+  }, [user]);
+  console.log(user);
+
   return (
     <Box as="header" p={8} bgColor="#FFFF">
       <Container maxW="container.xl">
@@ -21,30 +39,38 @@ function Nav() {
               Workout Buddy
             </Heading>
           </Link>
-          <HStack spacing={4}>
-            <Link as={RouterLink} to="/logout" onClick={logout}>
-              Logout
-            </Link>
-            <Link as={RouterLink} to="/signup">
-              Sign Up
-            </Link>
-            <Link
-              as={RouterLink}
-              to="/login"
-              bgColor="primary.100"
-              px={4}
-              py={2}
-              color="white"
-              borderRadius="md"
-              _hover={{ textDecoration: "none", bgColor: "green.600" }}
-            >
-              Log In
-            </Link>
-          </HStack>
+          <Box>
+            {user !== null ? (
+              <HStack spacing={4}>
+                <Text>{user.data.email}</Text>
+                <Link as={RouterLink} to="/login" onClick={logout}>
+                  Logout
+                </Link>
+              </HStack>
+            ) : (
+              <HStack spacing={4}>
+                <Link as={RouterLink} to="/signup">
+                  Sign Up
+                </Link>
+                <Link
+                  as={RouterLink}
+                  to="/login"
+                  bgColor="primary.100"
+                  px={4}
+                  py={2}
+                  color="white"
+                  borderRadius="md"
+                  _hover={{ textDecoration: "none", bgColor: "green.600" }}
+                >
+                  Log In
+                </Link>
+              </HStack>
+            )}
+          </Box>
         </Flex>
       </Container>
     </Box>
   );
 }
 
-export default Nav;
+export default React.memo(Nav);
