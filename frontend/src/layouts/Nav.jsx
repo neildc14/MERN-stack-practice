@@ -43,7 +43,14 @@ function Nav() {
             {user !== null ? (
               <HStack spacing={4}>
                 <Text>{user.data.email}</Text>
-                <Link as={RouterLink} to="/login" onClick={logout}>
+                <Link
+                  as={RouterLink}
+                  to="/login"
+                  onClick={logout}
+                  px={4}
+                  py={2}
+                  sx={{ border: "1px solid primary.100" }}
+                >
                   Logout
                 </Link>
               </HStack>
