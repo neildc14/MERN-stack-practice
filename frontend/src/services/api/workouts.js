@@ -4,7 +4,17 @@ const APIEndpoint = "http://localhost:4000/api/workouts";
 
 export const workoutsApi = createApi({
   reducerPath: "workoutsApi",
-  baseQuery: fetchBaseQuery({ baseUrl: `${APIEndpoint}` }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${APIEndpoint}`,
+    prepareHeaders: (headers, { getState }) => {
+      const token = getState().user.user?.data.token;
+      if (token) {
+        headers.set("authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
+  }),
+
   endpoints: (builder) => ({
     getAllWorkouts: builder.query({ query: () => "/" }),
     getWorkout: builder.query({
